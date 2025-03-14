@@ -1,21 +1,29 @@
 'use client';
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Select from "react-select";
 import DatePicker from "@/components/DatePicker";
 import { Course } from "@/utils/type";
+import api from "@/utils/api";
 
 const AddCourseForm: React.FC<{
     handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
     course?: Course;
     openForm: boolean;
   }> = ({ handleSubmit, course, openForm}) => {
-    const options = [
-      {value: 'mathematique', label: 'Mathématique'},
-      {value: 'histoire', label: 'Histoire'},
-      {value: 'geographie', label: 'Géographie'},
-      {value: 'francais', label: 'Français'},
-    ];
+    const [options, setOptions] = useState<{value: string, label: string}[]>([])
+
+    const fetchMatter = async () => {
+      await api.get('matters/')
+              .json<{name: string, description: string}[]>()
+              .then(resp => setOptions(resp.map(matter => ({value: matter.name, label: matter.name}))))
+              .catch(err => console.log(`error while fetching matters`))
+    }
+
+    useEffect(() => {
+      fetchMatter();
+    }, [])
+    
   
     return (
       <form onSubmit={handleSubmit} className="space-y-4 w-full">
@@ -50,12 +58,11 @@ const AddCourseForm: React.FC<{
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Syllabus
           </label>
-          <input 
-            type="text" 
+          <textarea 
             name="syllabus" 
             placeholder="Syllabus du cours" 
             defaultValue={course?.syllabus??undefined}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-30"
             required
           />
         </div>
@@ -70,25 +77,25 @@ const AddCourseForm: React.FC<{
             isSearchable={true}
             placeholder="Choisir la matière"
             name="matter"
-            defaultValue={course?.matter ?? options[0]}
+            defaultValue={course? {value: course.matter, label: course.matter } : options[0]}
             className="react-select-container"
             classNamePrefix="react-select"
           />
         </div>
         
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div> 
+            <label className="block text-sm font-medium text-gray-700 mb-1 ">
               Date de début
             </label>
-            <DatePicker name="start_date" />
+            <DatePicker name="start_date" initialDate={course?.start_date}/>
           </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Date de fin
             </label>
-            <DatePicker name="end_date" />
+            <DatePicker name="end_date" initialDate={course?.end_date}/>
           </div>
         </div>
         

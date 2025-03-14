@@ -1,6 +1,5 @@
 'use client';
 import { useAppSelector } from "@/redux/hooks";
-import exp from "constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,12 +9,7 @@ const Footer = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
     );
-    // const { onClickLogout, isLoading } = useLogout();
-    // const router = useRouter();
 
-    // const onClickLogin = () => {
-    //     router.push('/auth/login-register');
-    // }
 
     return (
         <>
@@ -118,10 +112,10 @@ const Footer = () => {
                                     Contact
                                 </h4>
                                 <address className="text-gray-400 not-italic">
-                                    <p>123, Avenue de l'Éducation</p>
-                                    <p>75000 Paris</p>
-                                    <p className="mt-3">contact@ecep.fr</p>
-                                    <p>01 23 45 67 89</p>
+                                    <p>secteur 22</p>
+                                    <p>Bobo-Dioulasso</p>
+                                    <p className="mt-3">ecepbf@gmail.com</p>
+                                    <p>00226 56 18 23 32</p>
                                 </address>
                             </div>
                         </div>

@@ -3,7 +3,8 @@ import { FormEvent, useState } from "react";
 import Input, { type InputProps } from "@/components/Input";
 import Link from "next/link";
 import Logo from "../Logo";
-import { FaSpinner } from "react-icons/fa";
+import { FaChalkboardTeacher, FaSpinner, FaUserGraduate, FaUsers } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 interface Props {
     submitHandler: (event: FormEvent<HTMLFormElement>, role: string) => void;
@@ -58,13 +59,7 @@ const specificFields = {
         },
     ],
     parent: [
-        {
-            name: "children_count",
-            label: "Number of children",
-            placeholder: "Enter number of children",
-            type: "number",
-            required: true,
-        },
+
     ],
     enseignant: [
         {
@@ -99,57 +94,78 @@ const RegisterForm: React.FC<{
     return (
         <div className="flex h-full w-full justify-center items-center">
             {!role ? (
-                <div className="flex flex-col md:flex-row gap-2 items-center justify-around w-full h-full px-4 py-8">
-                    <div
-                        className={`h-64 w-64 border rounded-lg flex flex-col justify-center items-center cursor-pointer shadow-md transition-all hover:shadow-lg ${
+                <div className="flex flex-col md:flex-row gap-4 items-center justify-center w-full h-full px-4 py-8">
+                    <motion.div
+                        className={`h-64 w-64 border rounded-lg flex flex-col justify-center items-center cursor-pointer shadow-md transition-all ${
                             role === "eleve"
                                 ? "border-blue-500 bg-blue-100"
                                 : "bg-blue-50 hover:bg-blue-100 border-blue-200"
                         }`}
                         onClick={() => handleRoleSelection("eleve")}
+                        whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)" }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: 0 }}
                     >
-                        <div className="text-4xl mb-4">👨‍🎓</div>
+                        <motion.div className="text-5xl mb-4 text-blue-600" whileHover={{ rotate: 5 }}>
+                            <FaUserGraduate />
+                        </motion.div>
                         <div className="text-xl font-medium text-blue-700">
                             Élève
                         </div>
                         <div className="text-sm text-blue-600 mt-2 text-center px-4">
                             Accès aux cours et aux exercices
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div
-                        className={`h-64 w-64 border rounded-lg flex flex-col justify-center items-center cursor-pointer shadow-md transition-all hover:shadow-lg ${
+                    <motion.div
+                        className={`h-64 w-64 border rounded-lg flex flex-col justify-center items-center cursor-pointer shadow-md transition-all ${
                             role === "parent"
                                 ? "border-green-500 bg-green-100"
                                 : "bg-green-50 hover:bg-green-100 border-green-200"
                         }`}
                         onClick={() => handleRoleSelection("parent")}
+                        whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)" }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: 0.1 }}
                     >
-                        <div className="text-4xl mb-4">👨‍👩‍👧‍👦</div>
+                        <motion.div className="text-5xl mb-4 text-green-600" whileHover={{ rotate: 5 }}>
+                            <FaUsers />
+                        </motion.div>
                         <div className="text-xl font-medium text-green-700">
                             Parent
                         </div>
                         <div className="text-sm text-green-600 mt-2 text-center px-4">
                             Suivez les progrès de vos enfants
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div
-                        className={`h-64 w-64 border rounded-lg flex flex-col justify-center items-center cursor-pointer shadow-md transition-all hover:shadow-lg ${
+                    <motion.div
+                        className={`h-64 w-64 border rounded-lg flex flex-col justify-center items-center cursor-pointer shadow-md transition-all ${
                             role === "enseignant"
                                 ? "border-purple-500 bg-purple-100"
                                 : "bg-purple-50 hover:bg-purple-100 border-purple-200"
                         }`}
                         onClick={() => handleRoleSelection("enseignant")}
+                        whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)" }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: 0.2 }}
                     >
-                        <div className="text-4xl mb-4">👩‍🏫</div>
+                        <motion.div className="text-5xl mb-4 text-purple-600" whileHover={{ rotate: 5 }}>
+                            <FaChalkboardTeacher />
+                        </motion.div>
                         <div className="text-xl font-medium text-purple-700">
                             Enseignant
                         </div>
                         <div className="text-sm text-purple-600 mt-2 text-center px-4">
                             Créez et gérez vos cours
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             ) : (
                 // Formulaire d'inscription après sélection du rôle
@@ -190,7 +206,7 @@ const RegisterForm: React.FC<{
                         href={"/auth/login"}
                         className="text-blue-500 hover:underline"
                     >
-                        Already signed up?
+                        Vous ete deja incrit?
                     </Link>
                 </div>
             )}

@@ -30,6 +30,35 @@ export interface Teacher {
 
 export type user = Student | Parent | Teacher | User;
 
+export interface Quiz {
+    id: number;
+    title: string;
+    description: string | null;
+    course: number | Course;
+    min_score_to_pass: number;
+    duration: number | null; // in minutes
+    questions: Question[] | number[] | null;
+    created_by: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Question {
+    id: number;
+    quiz: number;
+    text: string;
+    type: "multiple_choice" | "true_false" | "essay";
+    points: number;
+    answers: Answer[] | null;
+}
+
+export interface Answer {
+    id: number;
+    question: number;
+    text: string;
+    is_correct: boolean;
+}
+
 export interface Course {
     id: number;
     title: string;

@@ -93,7 +93,7 @@ const Header = () => {
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [prevScrollPos]);
+    }, [prevScrollPos, isLoading]);
 
     const onClickLogin = () => {
         router.push("/auth/login-register");
@@ -237,39 +237,9 @@ const Header = () => {
                                         <Moon size={20} />
                                     )}
                                 </button>
-                                <motion.button
-                                    onClick={onClickLogout}
-                                    className="text-black border border-gray-300 px-5 py-1 rounded-full transition duration-150 hover:bg-gray-100 flex items-center justify-center"
-                                    disabled={isLoggingOut}
-                                    variants={buttonVariants}
-                                    whileHover="hover"
-                                    whileTap="tap"
-                                >
-                                    {isLoggingOut
-                                        ? "Logging out..."
-                                        : "Log out"}
-                                    <motion.div
-                                        animate={{
-                                            rotate: isLoggingOut ? 360 : 0,
-                                        }}
-                                        transition={{
-                                            repeat: Infinity,
-                                            duration: 1,
-                                            ease: "linear",
-                                        }}
-                                    >
-                                        <FaSpinner
-                                            className={`ml-2 ${
-                                                !isLoggingOut &&
-                                                "text-transparent"
-                                            }`}
-                                        />
-                                    </motion.div>
-                                </motion.button>
+                                     {/* les link specifique a chaque user */}
 
-                                {/* les link specifique a chaque user */}
-
-                                {nav.map((item, index) => (
+                                     {nav.map((item, index) => (
                                     <Link
                                         key={index}
                                         href={item.href}
@@ -288,6 +258,26 @@ const Header = () => {
                                 >
                                     student
                                 </motion.button>
+                                <motion.button
+                                    onClick={onClickLogout}
+                                    className="text-black border border-gray-300 px-5 py-1 rounded-full transition duration-150 hover:bg-gray-100 flex items-center justify-center"
+                                    disabled={isLoggingOut}
+                                    variants={buttonVariants}
+                                    whileHover="hover"
+                                    whileTap="tap"
+                                >
+                                    Deconnecter
+                               
+                                    <FaSpinner
+                                        className={`ml-2 animate-spin ${
+                                            !isLoggingOut &&
+                                            "text-transparent"
+                                        }`}
+                                    />
+                                
+                                </motion.button>
+
+                           
                             </motion.div>
                         ) : (
                             <motion.div

@@ -7,8 +7,16 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 
-export default function DatePicker({ name }: { name: string }) {
-  const [date, setDate] = React.useState<Date | undefined>();
+interface DatePickerProps {
+  name: string;
+  initialDate?: Date | string;
+}
+
+export default function DatePicker({ name, initialDate }: DatePickerProps) {
+  const [date, setDate] = React.useState<Date | undefined>(() => {
+    if (!initialDate) return undefined;
+    return typeof initialDate === 'string' ? new Date(initialDate) : initialDate;
+  });
 
   return (
     <>
@@ -17,7 +25,7 @@ export default function DatePicker({ name }: { name: string }) {
       
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[200px] justify-start text-left">
+          <Button variant="outline" className="w-full justify-start text-left">
             <CalendarIcon className="mr-2 h-4 w-4" />
             {date ? format(date, "PPP") : "Pick a date"}
           </Button>

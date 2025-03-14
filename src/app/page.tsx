@@ -110,66 +110,7 @@ export default function HomePage2() {
         />
       ))}
 
-      {/* <motion.nav 
-        className={`border-b relative z-10 ${
-          isDark ? 'bg-gray-800 border-gray-700 shadow-md' : 'bg-white shadow-sm'
-        }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <motion.span 
-                  className={`font-bold text-2xl ${isDark ? 'text-blue-400' : 'text-blue-600'}`}
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  eCEP
-                </motion.span>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <button 
-                onClick={toggleTheme}
-                className={`p-2 rounded-md mr-3 ${
-                  isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                }`}
-                aria-label={isDark ? 'Activer le mode clair' : 'Activer le mode sombre'}
-              >
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-              >
-                <Link 
-                  href="/auth/login" 
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isDark ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
-                  }`}
-                >
-                  Connexion
-                </Link>
-                <Link 
-                  href="/auth/register" 
-                  className={`ml-4 px-4 py-2 rounded-md text-sm font-medium ${
-                    isDark 
-                      ? 'bg-blue-600 hover:bg-blue-500 text-white' 
-                      : 'bg-blue-600 hover:bg-blue-700 text-white'
-                  }`}
-                >
-                  S'inscrire
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </motion.nav> */}
+    
 
       {/* Hero Section */}
       <div className="pt-16 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
