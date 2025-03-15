@@ -73,10 +73,13 @@ const Page = () => {
     const router = useRouter();
     const { theme } = useTheme();
     const isDark = theme === "dark";
-    const [coursed, setCoursed] = useState<Course[]>([]);
+    const [courses, setCourses] = useState<Course[]>([]);
     const [showDeletePopUP, setShowDeletePopUP] = useState<boolean>(false);
-    const [currentCoursed, setCurrentCoursed] = useState<Course | undefined>();
+    const [currentCourse, setCurrentCourse] = useState<Course | undefined>();
     const [matters, setMatters] = useState<string[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [subjectFilter, setSubjectFilter] = useState("");
+    const [openForm, setOpenForm] = useState(false);
 
     const fetchCourses = async () => {
         await api
@@ -88,69 +91,16 @@ const Page = () => {
         await api
             .get("courses/user_courses/")
             .json<Course[]>()
-            .then((resp) => setCoursed(resp))
+            .then((resp) => setCourses(resp))
             .catch((err) => console.log(err));
     };
     
     useEffect(() => {
         fetchCourses();
-    }, [currentCoursed]);   
+    }, [currentCourse]);   
     
-    const [courses, setCourses] = useState([
-        {
-            id: 1,
-            title: "Grammaire - Les temps verbaux",
-            subject: "Français",
-            students: 24,
-            completionRate: 78,
-            badges: 3,
-            lastUpdated: "2025-03-08",
-        },
-        {
-            id: 2,
-            title: "La Révolution française",
-            subject: "Histoire",
-            students: 22,
-            completionRate: 65,
-            badges: 2,
-            lastUpdated: "2025-03-05",
-        },
-        {
-            id: 3,
-            title: "Multiplication et division",
-            subject: "Mathématiques",
-            students: 25,
-            completionRate: 82,
-            badges: 4,
-            lastUpdated: "2025-03-10",
-        },
-        {
-            id: 4,
-            title: "Le système solaire",
-            subject: "Sciences",
-            students: 23,
-            completionRate: 70,
-            badges: 2,
-            lastUpdated: "2025-03-01",
-        },
-    ]);
-
-    const [searchTerm, setSearchTerm] = useState("");
-    const [subjectFilter, setSubjectFilter] = useState("");
-    const [openForm, setOpenForm] = useState(false);
-    const [currentCourse, setCurrentCourse] = useState<Course | undefined>();
-
-    const subjects = [
-        "Français",
-        "Mathématiques",
-        "Histoire",
-        "Géographie",
-        "Sciences",
-        "Arts",
-        "Éducation civique",
-    ];
-
-    const filteredCourses = coursed.filter(
+    
+    const filteredCourses = courses.filter(
         (course) =>
             course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
             (subjectFilter === "" || course.matter === subjectFilter)
@@ -161,7 +111,7 @@ const Page = () => {
         const formData = new FormData(event.currentTarget);
 
         await api
-            .patch(`courses/${currentCoursed?.id}/`, {
+            .patch(`courses/${currentCourse?.id}/`, {
                 json: Object.fromEntries(formData),
             })
             .then((_) => {
@@ -198,8 +148,8 @@ const Page = () => {
             <button
                 className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center gap-2"
                 onClick={() => {
-                setCurrentCoursed(undefined);
-                setOpenForm(true);
+                    setCurrentCourse(undefined);
+                    setOpenForm(true);
                 }}
             >
                 <Plus size={20} />
@@ -215,7 +165,7 @@ const Page = () => {
                 </div>
                 <div>
                 <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm`}>Total des cours</p>
-                <p className="text-2xl font-bold">{coursed.length}</p>
+                <p className="text-2xl font-bold">{courses.length}</p>
                 </div>
             </div>
 
@@ -297,7 +247,7 @@ const Page = () => {
                     Cours
                     </th>
                     <th className={`px-6 py-3 text-left text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>
-                    Matière
+                    Matièrestudent
                     </th>
                     <th className={`px-6 py-3 text-left text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>
                     Élèves
@@ -363,7 +313,7 @@ const Page = () => {
                         <button
                             className={`${isDark ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-600 hover:text-indigo-900'}`}
                             onClick={() => {
-                            setCurrentCoursed(course);
+                            setCurrentCourse(course);
                             setOpenForm(true);
                             }}
                         >
@@ -372,7 +322,7 @@ const Page = () => {
                         <button
                             className={`${isDark ? 'text-red-400 hover:text-red-300' : 'text-red-600 hover:text-red-900'}`}
                             onClick={(_) => {
-                            setCurrentCoursed(course);
+                            setCurrentCourse(course);
                             setShowDeletePopUP(true);
                             }}
                         >
@@ -400,7 +350,7 @@ const Page = () => {
                                 <button
                                     className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
                                     onClick={async () => {
-                                    await api.delete(`courses/${currentCoursed?.id}/`);
+                                    await api.delete(`courses/${currentCourse?.id}/`);
                                     setShowDeletePopUP(false);
                                     }}
                                 >
@@ -436,14 +386,14 @@ const Page = () => {
                 </button>
 
                 <h2 className="text-2xl font-bold mb-8 text-center">
-                    {currentCoursed
+                    {currentCourse
                     ? "Modifier le cours"
                     : "Ajouter un nouveau cours"}
                 </h2>
 
                         <AddCourseForm
-                            handleSubmit={currentCoursed?handleUpdateSubmit:handleSubmit}
-                            course={currentCoursed}
+                            handleSubmit={currentCourse?handleUpdateSubmit:handleSubmit}
+                            course={currentCourse}
                             openForm={openForm}
                         />
                     </div>

@@ -8,7 +8,7 @@ export interface Profile {
 }
 
 export interface Student {
-    user: User,
+    user: User ,
     level: {
         level: number,
         min_xp: number,

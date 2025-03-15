@@ -42,6 +42,7 @@ interface StudentDashboardProps {
 const StudentDashboard = () => {
     const { data: me, isLoading } = useRetrieveUserQuery();
     const [coursesProgress, setCoursesProgress] = useState<CourseProgress[]>([]);
+    const [matters, setMatters] = useState<string[]>([]);
 
     const fetchCourses = async () => {
         await api
@@ -68,24 +69,6 @@ const StudentDashboard = () => {
             { id: 3, name: "Historien", icon: "🏛️", date: "2025-02-25" },
         ],
         recentCourses: [
-            {
-                id: 1,
-                title: "Les fractions",
-                subject: "Mathématiques",
-                progress: 80,
-            },
-            {
-                id: 2,
-                title: "La Révolution française",
-                subject: "Histoire",
-                progress: 65,
-            },
-            {
-                id: 3,
-                title: "Conjugaison - Le passé simple",
-                subject: "Français",
-                progress: 45,
-            },
         ],
         recommendedCourses: [
             {
@@ -101,6 +84,14 @@ const StudentDashboard = () => {
     const xpPercentage =
         (100 * ((me?.student?.xp ?? 0) - (me?.student?.level.min_xp ?? 0))) /
         ((me?.student?.level.max_xp ?? 1) - (me?.student?.level.min_xp ?? 0));
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="p-6 space-y-6">
@@ -190,36 +181,7 @@ const StudentDashboard = () => {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-3">
-                            {studentData.recentCourses.map((course) => (
-                                <div key={course.id} className="space-y-1">
-                                    <div className="flex justify-between">
-                                        <Link
-                                            href={`/student/courses/${course.id}`}
-                                            className="font-medium hover:text-blue-500"
-                                        >
-                                            {course.title}
-                                        </Link>
-                                        <Badge
-                                            variant="outline"
-                                            className="text-xs"
-                                        >
-                                            {course.subject}
-                                        </Badge>
-                                    </div>
-                                    {course.progress !== undefined && (
-                                        <>
-                                            <Progress
-                                                value={course.progress}
-                                                className="h-1.5"
-                                            />
-                                            <p className="text-xs text-gray-500 text-right">
-                                                {course.progress}% terminé
-                                            </p>
-                                        </>
-                                    )}
-                                </div>
-                            ))}
-
+                         
                             {coursesProgress
                                 .slice(0, 3)
                                 .map((courseProgress) => (
