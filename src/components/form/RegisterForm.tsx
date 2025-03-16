@@ -50,13 +50,6 @@ const commonFields: InputProps[] = [
 
 const specificFields = {
     eleve: [
-        {
-            name: "grade",
-            label: "Grade",
-            placeholder: "Enter your grade",
-            type: "text",
-            required: true,
-        },
     ],
     parent: [
 

@@ -21,12 +21,12 @@ const navigation = {
             href: "/student/courses",
             icon: <Book size={20} />,
         },
-        { name: "Badges", href: "/student/badges", icon: <Trophy size={20} /> },
-        {
-            name: "Messages",
-            href: "/student/messages",
-            icon: <MessageCircle size={20} />,
-        },
+        // { name: "Badges", href: "/student/badges", icon: <Trophy size={20} /> },
+        // {
+        //     name: "Messages",
+        //     href: "/student/messages",
+        //     icon: <MessageCircle size={20} />,
+        // },
     ],
     teacher: [
         { name: "Tableau de bord", href: "/teacher", icon: <User size={20} /> },
@@ -35,27 +35,27 @@ const navigation = {
             href: "/teacher/courses",
             icon: <Book size={20} />,
         },
-        {
-            name: "Messages",
-            href: "/teacher/messages",
-            icon: <MessageCircle size={20} />,
-        },
+        // {
+        //     name: "Messages",
+        //     href: "/teacher/messages",
+        //     icon: <MessageCircle size={20} />,
+        // },
     ],
     parent: [
         { name: "Tableau de bord", href: "/parent", icon: <User size={20} /> },
-        {
-            name: "Messages",
-            href: "/parent/messages",
-            icon: <MessageCircle size={20} />,
-        },
+        // {
+        //     name: "Messages",
+        //     href: "/parent/messages",
+        //     icon: <MessageCircle size={20} />,
+        // },
     ],
     admin: [
         { name: "Tableau de bord", href: "/admin", icon: <User size={20} /> },
-        {
-            name: "Messages",
-            href: "/admin/messages",
-            icon: <MessageCircle size={20} />,
-        },
+        // {
+        //     name: "Messages",
+        //     href: "/admin/messages",
+        //     icon: <MessageCircle size={20} />,
+        // },
     ],
 };
 
@@ -93,7 +93,7 @@ const Header = () => {
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [prevScrollPos, isLoading]);
+    }, [prevScrollPos, me]);
 
     const onClickLogin = () => {
         router.push("/auth/login-register");
@@ -248,16 +248,7 @@ const Header = () => {
                                         {item.icon}
                                     </Link>
                                 ))}
-                                <motion.button
-                                    onClick={(_) => router.push("/student")}
-                                    className="text-black border border-gray-300 px-5 py-1 rounded-full transition duration-150 hover:bg-gray-100 flex items-center justify-center"
-                                    disabled={isLoggingOut}
-                                    variants={buttonVariants}
-                                    whileHover="hover"
-                                    whileTap="tap"
-                                >
-                                    student
-                                </motion.button>
+                             
                                 <motion.button
                                     onClick={onClickLogout}
                                     className="text-black border border-gray-300 px-5 py-1 rounded-full transition duration-150 hover:bg-gray-100 flex items-center justify-center"
